@@ -7,9 +7,16 @@ wp_head();
 
 // チームと役職のパターンを定義
 $qr_patterns = [
-    '001' => ['team01' => ['role01', 'role02'], 'team02' => ['role01', 'role03'], 'team03' => ['role02', 'role03']],
-    '002' => ['team01' => ['role01', 'role02'], 'team02' => ['role01', 'role03'], 'team03' => ['role02', 'role03']],
-    // 他のQRコードパターンをここに追加
+    '001' => ['team01' => ['role01', 'role02'], 'team02' => ['role01', 'role02'], 'team03' => ['role01', 'role02']],
+    '002' => ['team01' => ['role02', 'role03'], 'team02' => ['role02', 'role03'], 'team03' => ['role02', 'role03']],
+    '003' => ['team01' => ['role01', 'role03'], 'team02' => ['role01', 'role03'], 'team03' => ['role01', 'role03']],
+    '004' => ['team01' => ['role01', 'role02'], 'team02' => ['role01', 'role02'], 'team03' => ['role01', 'role02']],
+    '005' => ['team01' => ['role02', 'role03'], 'team02' => ['role02', 'role03'], 'team03' => ['role02', 'role03']],
+    '006' => ['team01' => ['role01', 'role03'], 'team02' => ['role01', 'role03'], 'team03' => ['role01', 'role03']],
+    '007' => ['team01' => ['role01'], 'team02' => ['role01'], 'team03' => ['role01']],
+    '008' => ['team01' => ['role02'], 'team02' => ['role02'], 'team03' => ['role02']],
+    '009' => ['team01' => ['role03'], 'team02' => ['role03'], 'team03' => ['role03']],
+    '010' => ['team01' => ['role01', 'role02', 'role03'], 'team02' => ['role01', 'role02', 'role03'], 'team03' => ['role01', 'role02', 'role03']],
 ];
 
 // 役職名の定義（カスタムフィールドから取得）
@@ -17,6 +24,13 @@ $role_names = [
     'role01' => get_post_meta(get_the_ID(), 'role01', true) ?: '役職1',
     'role02' => get_post_meta(get_the_ID(), 'role02', true) ?: '役職2',
     'role03' => get_post_meta(get_the_ID(), 'role03', true) ?: '役職3'
+];
+
+// チーム名の定義（カスタムフィールドから取得）
+$team_names = [
+    'team01' => get_post_meta(get_the_ID(), 'team01', true) ?: 'チーム1',
+    'team02' => get_post_meta(get_the_ID(), 'team02', true) ?: 'チーム2',
+    'team03' => get_post_meta(get_the_ID(), 'team03', true) ?: 'チーム3'
 ];
 
 // パラメータの取得
@@ -33,21 +47,24 @@ $required_roles_teams = $qr_patterns[$qr_id];
 
 // 送信されたフォームの処理
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $selected_team = isset($_POST['selected_team']) ? sanitize_text_field($_POST['selected_team']) : '';
+    if (empty($selected_team) || !isset($required_roles_teams[$selected_team])) {
+        wp_die('Invalid team selection');
+    }
+
     $inputs = [];
     $all_correct = true;
 
-    foreach ($required_roles_teams as $team => $roles) {
-        foreach ($roles as $role) {
-            $input_key = 'input_' . $team . '_' . $role;
-            $inputs[$team][$role] = isset($_POST[$input_key]) ? sanitize_text_field($_POST[$input_key]) : '';
-            
-            $correct_code_a = get_post_meta(get_the_ID(), $role . '_a', true);
-            $correct_code_b = get_post_meta(get_the_ID(), $role . '_b', true);
-            
-            if ($inputs[$team][$role] !== $correct_code_a && $inputs[$team][$role] !== $correct_code_b) {
-                $all_correct = false;
-                break 2; // 正解でない場合はループを終了
-            }
+    foreach ($required_roles_teams[$selected_team] as $role) {
+        $input_key = 'input_' . $selected_team . '_' . $role;
+        $inputs[$role] = isset($_POST[$input_key]) ? sanitize_text_field($_POST[$input_key]) : '';
+        
+        $correct_code_a = get_post_meta(get_the_ID(), $role . '_a', true);
+        $correct_code_b = get_post_meta(get_the_ID(), $role . '_b', true);
+
+        if ($inputs[$role] !== $correct_code_a && $inputs[$role] !== $correct_code_b) {
+            $all_correct = false;
+            break;
         }
     }
 
@@ -77,21 +94,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <form method="post" action="" class="qr-code-form">
                     <input type="hidden" name="qr" value="<?php echo esc_attr($qr_id); ?>">
-                    
+
+                    <div class="form-group">
+                        <label for="team_select">チームを選択してください:</label>
+                        <select id="team_select" name="selected_team" required>
+                            <option value="" disabled selected>チームを選択</option>
+                            <?php foreach ($team_names as $team_key => $team_name): ?>
+                                <option value="<?php echo esc_attr($team_key); ?>"><?php echo esc_html($team_name); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
                     <?php foreach ($required_roles_teams as $team => $roles): ?>
-                        <h3><?php echo esc_html($team); ?>の入力</h3>
-                        <?php foreach ($roles as $role): ?>
-                            <div class="form-group">
-                                <label for="input_<?php echo esc_attr($team); ?>_<?php echo esc_attr($role); ?>">
-                                    <?php echo esc_html($role_names[$role]); ?>のコード (<?php echo esc_html($team); ?>):
-                                </label>
-                                <input type="text" id="input_<?php echo esc_attr($team); ?>_<?php echo esc_attr($role); ?>" name="input_<?php echo esc_attr($team); ?>_<?php echo esc_attr($role); ?>" required>
-                            </div>
-                        <?php endforeach; ?>
+                        <div class="team-roles" data-team="<?php echo esc_attr($team); ?>" style="display:none;">
+                            <?php foreach ($roles as $role): ?>
+                                <div class="form-group">
+                                    <label for="input_<?php echo esc_attr($team); ?>_<?php echo esc_attr($role); ?>">
+                                        <?php echo esc_html($role_names[$role]); ?>のコード (<?php echo esc_html($team_names[$team]); ?>):
+                                    </label>
+                                    <input type="text" id="input_<?php echo esc_attr($team); ?>_<?php echo esc_attr($role); ?>" name="input_<?php echo esc_attr($team); ?>_<?php echo esc_attr($role); ?>" required>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                     <?php endforeach; ?>
                     
                     <button type="submit" class="submit-btn">確認</button>
                 </form>
+
+                <script>
+                    document.getElementById('team_select').addEventListener('change', function() {
+                        var selectedTeam = this.value;
+                        
+                        // すべてのチームの役職フィールドを非表示にし、requiredを解除
+                        document.querySelectorAll('.team-roles').forEach(function(teamDiv) {
+                            teamDiv.style.display = 'none';
+                            teamDiv.querySelectorAll('input').forEach(function(input) {
+                                input.removeAttribute('required');
+                            });
+                        });
+
+                        // 選択されたチームの役職フィールドのみ表示し、requiredを追加
+                        if (selectedTeam) {
+                            var selectedTeamDiv = document.querySelector('.team-roles[data-team="' + selectedTeam + '"]');
+                            if (selectedTeamDiv) {
+                                selectedTeamDiv.style.display = 'block';
+                                selectedTeamDiv.querySelectorAll('input').forEach(function(input) {
+                                    input.setAttribute('required', 'required');
+                                });
+                            }
+                        }
+                    });
+                </script>
+
+
+
             </div>
         </article>
     </main>
@@ -181,6 +237,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
     }
+    /* セレクトボックスのスタイル */
+    select {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 2px solid #ddd;
+        border-radius: 4px;
+        background-color: #fff;
+        color: #333;
+        outline: none;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        cursor: pointer;
+        transition: border-color 0.3s ease;
+    }
+
+    /* セレクトボックスのホバー時のスタイル */
+    select:hover {
+        border-color: #888;
+    }
+
+    /* セレクトボックスのフォーカス時のスタイル */
+    select:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    /* 矢印アイコンのカスタマイズ */
+    select::after {
+        content: '\25BC';
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
+
+    /* セレクトボックスのラベルのスタイル */
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #555;
+    }
+
 </style>
 
 <?php
