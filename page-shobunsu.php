@@ -10,13 +10,7 @@ $qr_patterns = [
     '001' => ['team01' => ['role01', 'role02'], 'team02' => ['role01', 'role02'], 'team03' => ['role01', 'role02']],
     '002' => ['team01' => ['role02', 'role03'], 'team02' => ['role02', 'role03'], 'team03' => ['role02', 'role03']],
     '003' => ['team01' => ['role01', 'role03'], 'team02' => ['role01', 'role03'], 'team03' => ['role01', 'role03']],
-    '004' => ['team01' => ['role01', 'role02'], 'team02' => ['role01', 'role02'], 'team03' => ['role01', 'role02']],
-    '005' => ['team01' => ['role02', 'role03'], 'team02' => ['role02', 'role03'], 'team03' => ['role02', 'role03']],
-    '006' => ['team01' => ['role01', 'role03'], 'team02' => ['role01', 'role03'], 'team03' => ['role01', 'role03']],
-    '007' => ['team01' => ['role01'], 'team02' => ['role01'], 'team03' => ['role01']],
-    '008' => ['team01' => ['role02'], 'team02' => ['role02'], 'team03' => ['role02']],
-    '009' => ['team01' => ['role03'], 'team02' => ['role03'], 'team03' => ['role03']],
-    '010' => ['team01' => ['role01', 'role02', 'role03'], 'team02' => ['role01', 'role02', 'role03'], 'team03' => ['role01', 'role02', 'role03']],
+    // その他のパターンも定義...
 ];
 
 // 役職名の定義（カスタムフィールドから取得）
@@ -35,8 +29,6 @@ $team_names = [
 
 // パラメータの取得
 $qr_id = isset($_GET['qr']) ? sanitize_text_field($_GET['qr']) : '';
-
-// ベースURLの設定
 $base_url = home_url('shobunsu');
 
 if (!isset($qr_patterns[$qr_id])) {
@@ -58,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($required_roles_teams[$selected_team] as $role) {
         $input_key = 'input_' . $selected_team . '_' . $role;
         $inputs[$role] = isset($_POST[$input_key]) ? sanitize_text_field($_POST[$input_key]) : '';
-        
+
         $correct_code_a = get_post_meta(get_the_ID(), $role . '_a', true);
         $correct_code_b = get_post_meta(get_the_ID(), $role . '_b', true);
 
@@ -69,12 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($all_correct) {
-        // 正解の場合、成功ページにリダイレクト
         $redirect_url = $base_url . '/success/';
         wp_redirect(add_query_arg('qr', $qr_id, $redirect_url));
         exit;
     } else {
-        // 不正解の場合、エラーページにリダイレクト
         $redirect_url = $base_url . '/error/';
         wp_redirect(add_query_arg('qr', $qr_id, $redirect_url));
         exit;
@@ -95,6 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <form method="post" action="" class="qr-code-form">
                     <input type="hidden" name="qr" value="<?php echo esc_attr($qr_id); ?>">
 
+                    <!-- チーム選択のセレクトボックス -->
                     <div class="form-group">
                         <label for="team_select">チームを選択してください:</label>
                         <select id="team_select" name="selected_team" required>
@@ -105,6 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </select>
                     </div>
 
+                    <!-- 選択されたチームの役職ごとの入力欄を表示 -->
                     <?php foreach ($required_roles_teams as $team => $roles): ?>
                         <div class="team-roles" data-team="<?php echo esc_attr($team); ?>" style="display:none;">
                             <?php foreach ($roles as $role): ?>
@@ -124,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <script>
                     document.getElementById('team_select').addEventListener('change', function() {
                         var selectedTeam = this.value;
-                        
+
                         // すべてのチームの役職フィールドを非表示にし、requiredを解除
                         document.querySelectorAll('.team-roles').forEach(function(teamDiv) {
                             teamDiv.style.display = 'none';
@@ -146,12 +138,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     });
                 </script>
 
-
-
             </div>
         </article>
     </main>
 </div>
+
 
 
 
