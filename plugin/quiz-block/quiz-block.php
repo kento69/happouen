@@ -31,6 +31,7 @@ function quiz_block_quiz_block_block_init() {
 add_action( 'init', 'quiz_block_quiz_block_block_init' );
 
 // ブロックの登録
+ /*
 function quiz_block_quiz_block_block_init() {
     // 選択式クイズブロック
     register_block_type('my-quiz/multiple-choice', array(
@@ -145,3 +146,4 @@ function render_text_input_quiz($attributes) {
     return ob_get_clean();
 }
 
+*/
