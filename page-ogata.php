@@ -26,8 +26,7 @@
         .text-input {
             width: 100%;
             max-width: 400px;
-            padding: 12px;
-            font-size: 16px;
+            padding: 18px 24px;
             border: 2px solid #ddd;
             border-radius: 5px;
             margin-bottom: 15px;
@@ -41,7 +40,7 @@
             cursor: not-allowed;
         }
         .submit-button {
-            padding: 10px 20px;
+            padding: 16px 32px;
             background: #007bff;
             color: white;
             border: none;
@@ -58,7 +57,7 @@
         }
         .feedback {
             padding: 15px;
-            margin: 10px 0;
+            margin: 40px 0 10px;
             border-radius: 5px;
         }
         .feedback.correct {

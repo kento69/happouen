@@ -54,7 +54,7 @@
             pointer-events: none;
         }
         .submit-button {
-            padding: 10px 20px;
+            padding: 16px 32px;
             background: #007bff;
             color: white;
             border: none;
@@ -71,7 +71,7 @@
         }
         .feedback {
             padding: 15px;
-            margin: 10px 0;
+            margin: 40px 0 10px;
             border-radius: 5px;
         }
         .feedback.correct {

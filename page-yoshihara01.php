@@ -33,7 +33,7 @@
             margin: 20px 0;
         }
         .option-button {
-            padding: 10px 20px;
+            padding: 16px 32px;
             border: 2px solid #ddd;
             border-radius: 5px;
             background: white;
@@ -69,7 +69,7 @@
         }
         .feedback {
             padding: 15px;
-            margin: 10px 0;
+            margin: 40px 0 10px;
             border-radius: 5px;
         }
         .feedback.correct {
