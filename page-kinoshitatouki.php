@@ -4,16 +4,14 @@
     <div class="quiz-container">
         <!-- イントロセクション -->
         <div class="intro" id="quizIntro">
-            <p>ここに藩境石・・江戸時代には久留米藩と柳河藩の境目として用いられていた。当時の藩境は、国境のようにぴり付いてた場所でもあった。だから、道をジグザグにして攻撃から身を隠せるような作りになっていた。</p>
+            <p>木下家店長「怪しい奴！うちは江戸時代から代々続く老舗の陶器屋だと知ってるのか？冷やかしなら出ていきな！」</p>
         </div>
         
         <!-- クイズセクション -->
         <div class="quiz-section" id="quiz">
-            <p class="question-text">おや、少女が泣いている。「えーんえーん」</p>
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hanzakai/girl03.png" alt="イントロ画像" />
             <div class="quiz-options">
-                <button class="option-button" data-value="1">1:声をかける</button>
-                <button class="option-button" data-value="2">2:忙しいので無視</button>
+                <button class="option-button" data-value="1">1:　買い物しますよ</button>
+                <button class="option-button" data-value="2">2:　聞き込みさせてください</button>
             </div>
             <button class="submit-button" id="submitQuiz" disabled>解答する</button>
             <div class="feedback hidden" id="quizFeedback"></div>
@@ -26,15 +24,10 @@
             const quizConfig = {
                 correctAnswer: '1',
                 feedbackCorrect: {
-                    text: '君、お名前は？',
-                    text01: '少女「アタイはお銀。おうちが分からなくなっちゃたの・・」',
-                    text02: 'まいったな・・何か目印みたいなものはないかな？',
-                    text03: '少女「ええっと・・お酢のお店と、和紙屋さんの間の古いおうちなんだけど・・」',
-                    image: '<?php echo get_template_directory_uri(); ?>/assets/images/hanzakai/girl01.png'
+                    text: '木下屋店長「おっとお客さんかい、失礼だった！是非何か見ていってくんなせえ！」よし、店に入ろう！',
                 },
                 feedbackIncorrect: {
-                    text: '少女「えーんええーん」',
-                    image: '<?php echo get_template_directory_uri(); ?>/assets/images/hanzakai/girl03.png'
+                    text: '木下屋店長「モノも買わねえ奴には何も教えてやらん！」',
                 }
             };
 
