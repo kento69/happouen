@@ -1,21 +1,20 @@
 <?php get_header();?>
 
 <body>
-    <div class="quiz-container">
+    <div class="quiz-container -yoshihara">
         <!-- イントロセクション -->
         <div class="intro" id="quizIntro">
             <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hanzakai/yoshihara01.png" alt="イントロ画像" />
-            <p>ここは柳川藩小保町の別当職を代々務め、のちに蒲池組の大庄屋となった吉原家の住宅。住人は留守のようだ。土間から良い匂いがするぞ・・行ってみよう！</p>
         </div>
 
         <!-- クイズセクション -->
         <div class="quiz-section" id="quiz">
-            <p class="question-text">住人「お、お前さんたち、何者だい！？」</p>
+            <p class="question-text">Resident: "Hey! W-who are you people!?"</p>
             <div class="quiz-options">
-                <button class="option-button" data-value="1">1:　怪しい者ではありません</button>
-                <button class="option-button" data-value="2">2:　高橋さんの友人です</button>
+                <button class="option-button" data-value="1">1: Nobody. We were just wondering what that smell was.</button>
+                <button class="option-button" data-value="2">2. Sorry! We're friends of Kazukiyo-san, and we were wondering what that smell was.</button>
             </div>
-            <button class="submit-button" id="submitQuiz" disabled>解答する</button>
+            <button class="submit-button" id="submitQuiz" disabled>Answer</button>
             <div class="feedback hidden" id="quizFeedback"></div>
         </div>
     </div>
@@ -26,13 +25,13 @@
             const quizConfig = {
                 correctAnswer: '2',
                 feedbackCorrect: {
-                    text01: '住人「なあんだ、高橋さんの友人かい！ちょうど今、高橋さんに教えてもらったお酢ジュースを土間で作ってるところだ、お前らにもレシピをくれてやる」',
-                    text02: '住人「高橋さんに伝えておいてくれ、俺らはあんたのお酢が大好きだって！小さいころから変わらない味だ、ずっとこのままで頼むよ！」',
+                    text01: 'Resident: "Oh, you\'re friends of Kazukiyo-san? Welcome! That smell is the vinegar juice Kazukiyo-san taught me to make. I\'ll give you the recipe if you\'d like.',
+                    text02: 'Resident: "Please tell Kazukiyo-san that we love his vinegar! ',
                     image: '<?php echo get_template_directory_uri(); ?>/assets/images/hanzakai/yoshihara02.png',
-                    file: '<?php echo get_template_directory_uri(); ?>/assets/document/cocktail.pdf'
+                    file: '<?php echo get_template_directory_uri(); ?>/assets/images/recipe/royalapple.png'
                 },
                 feedbackIncorrect: {
-                    text: '住人「怪しい！勝手に家に入り込みやがって！けえれけえれ！」',
+                    text: 'Resident: "Nobody?! Bandits more like. You can\'t barge into my house without permission! Get out, get out!"',
                     image: '<?php echo get_template_directory_uri(); ?>/assets/images/hanzakai/yoshihara02.png'
                 }
             };
@@ -73,7 +72,7 @@
 
                 // 画像URLが存在し、空でない場合のみ追加
                 if (feedback.file && feedback.file.trim() !== '') {
-                    feedbackContent += `<a href="${feedback.file}" download>お酢ジュースのレシピを手に入れる</a>`;
+                    feedbackContent += `<a href="${feedback.file}" download>You've obtained the vinegar juice recipe "Royal Apple".</a>`;
                 }
                 
                 // テキストが存在し、空でない場合のみ追加

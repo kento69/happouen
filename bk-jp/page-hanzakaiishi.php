@@ -1,19 +1,21 @@
 <?php get_header();?>
 
 <body>
-    <div class="quiz-container -kinoshita">
+    <div class="quiz-container">
         <!-- イントロセクション -->
         <div class="intro" id="quizIntro">
-            <p>Kinoshita family Shop owner: "Welcome! I see you're admiring my pottery. In case you weren't aware, my pottery shop has been established in this town since the Edo period. I am very busy today and have no time for browsers, so if you're not interested in buying, please leave!"</p>
+            <p>ここに藩境石・・江戸時代には久留米藩と柳河藩の境目として用いられていた。当時の藩境は、国境のようにぴり付いてた場所でもあった。だから、道をジグザグにして攻撃から身を隠せるような作りになっていた。</p>
         </div>
         
         <!-- クイズセクション -->
         <div class="quiz-section" id="quiz">
+            <p class="question-text">おや、少女が泣いている。「えーんえーん」</p>
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hanzakai/girl03.png" alt="イントロ画像" />
             <div class="quiz-options">
-                <button class="option-button" data-value="1">1. "I'm here to shop.:</button>
-                <button class="option-button" data-value="2">2. "I'd like to ask some questions first."</button>
+                <button class="option-button" data-value="1">1:声をかける</button>
+                <button class="option-button" data-value="2">2:忙しいので無視</button>
             </div>
-            <button class="submit-button" id="submitQuiz" disabled>Answer</button>
+            <button class="submit-button" id="submitQuiz" disabled>解答する</button>
             <div class="feedback hidden" id="quizFeedback"></div>
         </div>
     </div>
@@ -24,10 +26,15 @@
             const quizConfig = {
                 correctAnswer: '1',
                 feedbackCorrect: {
-                    text: 'Shop owner: "Oh, a customer! My apologies! Please, take your time and look around." Alright, let\'s go into the shop!',
+                    text: '君、お名前は？',
+                    text01: '少女「アタイはお銀。おうちが分からなくなっちゃたの・・」',
+                    text02: 'まいったな・・何か目印みたいなものはないかな？',
+                    text03: '少女「ええっと・・お酢のお店と、和紙屋さんの間の古いおうちなんだけど・・」',
+                    image: '<?php echo get_template_directory_uri(); ?>/assets/images/hanzakai/girl01.png'
                 },
                 feedbackIncorrect: {
-                    text: 'Shop owner: "I\'m in no mood to answer questions from folks who won\'t buy anything. Get out!"',
+                    text: '少女「えーんええーん」',
+                    image: '<?php echo get_template_directory_uri(); ?>/assets/images/hanzakai/girl03.png'
                 }
             };
 

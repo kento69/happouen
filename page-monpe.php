@@ -1,28 +1,27 @@
 <?php get_header();?>
 <body>
-    <div class="quiz-container">
+    <div class="quiz-container -monpe">
         <!-- イントロセクション -->
         <div class="intro" id="quizIntro">
             <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hanzakai/monpe01.png" alt="イントロ画像" />
             <!-- <h1>クイズタイトル</h1> -->
-            <p>もんぺ屋店長「おいおい、お店の前でじろじろしやがって！うちがもんぺ屋だと知ってのことか！？」</p>
+            <p>Monpe Shop Manager: "Well hello! I've noticed you staring at my Monpe Shop. Do you know what a Monpe Shop is?</p>
         </div>
 
         <!-- 選択式クイズセクション -->
         <div class="quiz-section" id="multipleChoiceQuiz">
-            <!-- <p class="question-text">選択式の問題文をここに入力します。</p> -->
             <div class="quiz-options">
-                <button class="option-button" data-value="1">1:　知ってますよ</button>
-                <button class="option-button" data-value="2">2:　もんぺ屋ってなんですか？</button>
+                <button class="option-button" data-value="1">1. Yes, I know.</button>
+                <button class="option-button" data-value="2">2. No, I don't think so. What's a "Monpe" shop?</button>
             </div>
-            <button class="submit-button" id="submitMultipleChoice" disabled>解答する</button>
+            <button class="submit-button" id="submitMultipleChoice" disabled>Answer</button>
             <div class="feedback hidden" id="multipleChoiceFeedback"></div>
         </div>
 
         <!-- 入力式クイズセクション -->
         <div class="quiz-section hidden" id="textInputQuiz">
-            <input type="text" class="text-input" id="textAnswer" placeholder="もんぺ屋が作られたのは西暦何年？">
-            <button class="submit-button" id="submitTextInput">解答する</button>
+            <input type="text" class="text-input" id="textAnswer" placeholder="Enter the password.">
+            <button class="submit-button" id="submitTextInput">Answer</button>
             <div class="feedback hidden" id="textInputFeedback"></div>
         </div>
     </div>
@@ -33,21 +32,22 @@
             const multipleChoiceQuiz = {
                 correctAnswer: '1',
                 feedbackCorrect: {
-                    text: 'もんぺ屋店長「本当か？なら、おんぺが作られたのは西暦何年のことだ、言ってみろ」',
+                    text: 'Monpe Shop Manager: "Oh Really? Then tell me, what year were monpe trousers created? Come on, tell me." ',
                 },
                 feedbackIncorrect: {
-                    text: 'もんぺ屋店長「かぁー・・そんなことも知らねえのか！もんぺってのは戦時中の1942年に制定された「活動衣・作業着」だ。革命的な暖かさと動きやすさを持つことから、戦後も国民着として愛されてる、まさに和と洋の融合した日常着だ！」',
+                    text: '"Monpe" are trousers popularized in 1942 as an informal uniform for work. Thanks to their warmth and easy mobility, they\'ve become popular clothing for everyday use. They are a perfect blend of Japanese and Western clothing! ',
                 }
             };
-
+            
             // 入力式クイズの設定
             const textInputQuiz = {
                 correctAnswer: '1942',
                 feedbackCorrect: {
-                    text: '「おっと失礼した、あんたら日本の歴史に詳しいんだなぁ・・なに、あんた達庄分酢さんのお友達だって？うちの家ね、庄分酢さんのお酢の煙で黒くなってるんだぜ」「でもな、そんなことで文句言う人この町にはいない。だって、昔から続いているものだもんな。もうそれが当たり前、日常の一つになっちゃってる、ってわけよ」',
+                    text: 'Monpe Shop Manager: "Impressive! You do seem to know about Japanese History. What\'s that? You\'re friends of Shobunsu? The bacteria released whenever Shobunsu makes vinegar always turn the exterior walls black." ',
+                    file: '<?php echo get_template_directory_uri(); ?>/assets/images/recipe/citrusbreeze.png',
                 },
                 feedbackIncorrect: {
-                    text: 'もう一度考えてみましょう。',
+                    text: '"Oh no! I should have just answered honestly to the first question..."',
                 }
             };
 
@@ -81,6 +81,7 @@
                 if (feedback.image && feedback.image.trim() !== '') {
                     feedbackContent += `<img class="feedback-image" src="${feedback.image}" alt="フィードバック画像">`;
                 }
+
                 
                 // フィードバック内容を設定
                 feedbackDiv.innerHTML = feedbackContent;
@@ -109,6 +110,11 @@
                 // 画像URLが存在し、空でない場合のみ追加
                 if (feedback.image && feedback.image.trim() !== '') {
                     feedbackContent += `<img class="feedback-image" src="${feedback.image}" alt="フィードバック画像">`;
+                }
+
+                // 画像URLが存在し、空でない場合のみ追加
+                if (feedback.file && feedback.file.trim() !== '') {
+                    feedbackContent += `<a href="${feedback.file}" download>You've obtained the vinegar juice recipe "Citrus Breeze".</a>`;
                 }
                 
                 // フィードバック内容を設定

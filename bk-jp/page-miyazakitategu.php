@@ -1,32 +1,32 @@
 <?php get_header();?>
 
 <body>
-    <div class="quiz-container -tategu">
+    <div class="quiz-container">
         <!-- イントロセクション -->
         <div class="intro" id="quizIntro">
             <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hanzakai/miyazaki01.png" alt="イントロ画像" />
-            <p>Miyazaki Furnishings was founded in 1927. Their skillful workmanship and user-friendly designs have made them popular not only with traditional Japanese architects but with modern craftsmanship such as cafes and trains. Although they've adopted many modern projects, they've continued to pass down their ancestral crafting techniques to the present day. </p>
+            <p>宮崎建具の創業は1927年。木を自在に操り、使いやすいデザインをモットーに、伝統的な建具だけでなく、カフェや豪華観光列車の内装まで手掛けている。常に新しいものづくりにチャレンジしながら、職人の技術を今に伝えている。</p>
         </div>
 
         <!-- 第1問 選択式クイズセクション -->
         <div class="quiz-section" id="firstQuiz">
-            <p class="question-text">"Stop! Who are you? You look suspicious."</p>
+            <p class="question-text">当時の店主「おいお前、怪しいな」</p>
             <div class="quiz-options">
-                <button class="option-button" data-value="1">"Sorry, we didn't mean to act suspicious. We were just admiring your woodwork."</button>
-                <button class="option-button" data-value="2">"We're not acting suspicious! How rude!"</button>
+                <button class="option-button" data-value="1">1:　怪しいです</button>
+                <button class="option-button" data-value="2">2:　怪しくないです</button>
             </div>
-            <button class="submit-button" id="submitFirstQuiz" disabled>Answer</button>
+            <button class="submit-button" id="submitFirstQuiz" disabled>解答する</button>
             <div class="feedback hidden" id="firstQuizFeedback"></div>
         </div>
 
         <!-- 第2問 選択式クイズセクション -->
         <div class="quiz-section hidden" id="secondQuiz">
             <div class="quiz-options">
-                <button class="option-button" data-value="1">Cedar</button>
-                <button class="option-button" data-value="2">Oak</button>
-                <button class="option-button" data-value="3">Teak</button>
+                <button class="option-button" data-value="1">1:　スギ</button>
+                <button class="option-button" data-value="2">2:　オーク</button>
+                <button class="option-button" data-value="3">3:　チーク</button>
             </div>
-            <button class="submit-button" id="submitSecondQuiz" disabled>Answer</button>
+            <button class="submit-button" id="submitSecondQuiz" disabled>解答する</button>
             <div class="feedback hidden" id="secondQuizFeedback"></div>
         </div>
     </div>
@@ -36,22 +36,21 @@
             // クイズの設定
             const quizConfig = {
                 first: {
-                    correctAnswer: '1',
+                    correctAnswer: '2',
                     feedbackCorrect: {
-                        text: 'Hmph...Well, Okawa is a woodworking town and anyone who loves woodworking is known to be trustworthy. Alright, tell me this, what type of wood is used for the exterior of this building?"',
+                        text: '「ふんっ・・この大川は木工の町、木を愛する人間なら信用できるってもんよ。よし、この建物の外壁に使われている木材の種類をあててみな！」',
                     },
                     feedbackIncorrect: {
-                        text: '"Ha! Get outta here!" ',
+                        text: '当時の店主「そうだろう！？俺は鼻がきくんだ」',
                     }
                 },
                 second: {
                     correctAnswer: '1',
                     feedbackCorrect: {
-                        text: '"You...you got it right! Cedar wood is native to Japan and is often used for the exterior of houses. It\'s durable and lasts a long time. You are quite the wood expert!" "What that? Shobunzu is worried about mass marketing?" "I\'m only a joiner, so I can\'t say much about vinegar, but I\'ll tell you this: liquids always taste better when they are made in wooden barrels than by machines. At least in my opinion."',
-                        file: '<?php echo get_template_directory_uri(); ?>/assets/images/recipe/greenrush.png'
+                        text: '「せ、正解だ・・！スギは日本原産の木材で、内装や外壁にも用いられ、長持ちするんだ。さてはあんた、相当な木力の持ち主だな？」「なに？庄分酢の旦那が悩んでる？」「俺は建具だから、詳しいことは言えんが、やはり機械で作ったもんより、木の樽で作ったもんのほうが美味しいぜ」',
                     },
                     feedbackIncorrect: {
-                        text: '"Ha! Get outta here!"',
+                        text: '「この大川は木工の町、木のことを何も知れねぇやつはよそ者にちげぇねぇ。やっぱり怪しいやつだ。どっか行きなっ！」',
                     }
                 }
             };
@@ -144,12 +143,7 @@
                 if (feedback.image && feedback.image.trim() !== '') {
                     feedbackContent += `<img src="${feedback.image}" alt="フィードバック画像" style="max-width: 100%;">`;
                 }
-
-                // 画像URLが存在し、空でない場合のみ追加
-                if (feedback.file && feedback.file.trim() !== '') {
-                    feedbackContent += `<a href="${feedback.file}" download>You've obtained the vinegar juice recipe "Green Rush".</a>`;
-                }
-
+                
                 // フィードバック内容を設定
                 feedbackDiv.innerHTML = feedbackContent;
                 feedbackDiv.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;

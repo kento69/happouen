@@ -1,19 +1,19 @@
 <?php get_header();?>
 
 <body>
-    <div class="quiz-container -kinoshita">
+    <div class="quiz-container">
         <!-- イントロセクション -->
         <div class="intro" id="quizIntro">
-            <p>Kinoshita family Shop owner: "Welcome! I see you're admiring my pottery. In case you weren't aware, my pottery shop has been established in this town since the Edo period. I am very busy today and have no time for browsers, so if you're not interested in buying, please leave!"</p>
+            <p>木下家店長「怪しい奴！うちは江戸時代から代々続く老舗の陶器屋だと知ってるのか？冷やかしなら出ていきな！」</p>
         </div>
         
         <!-- クイズセクション -->
         <div class="quiz-section" id="quiz">
             <div class="quiz-options">
-                <button class="option-button" data-value="1">1. "I'm here to shop.:</button>
-                <button class="option-button" data-value="2">2. "I'd like to ask some questions first."</button>
+                <button class="option-button" data-value="1">1:　買い物しますよ</button>
+                <button class="option-button" data-value="2">2:　聞き込みさせてください</button>
             </div>
-            <button class="submit-button" id="submitQuiz" disabled>Answer</button>
+            <button class="submit-button" id="submitQuiz" disabled>解答する</button>
             <div class="feedback hidden" id="quizFeedback"></div>
         </div>
     </div>
@@ -24,10 +24,10 @@
             const quizConfig = {
                 correctAnswer: '1',
                 feedbackCorrect: {
-                    text: 'Shop owner: "Oh, a customer! My apologies! Please, take your time and look around." Alright, let\'s go into the shop!',
+                    text: '木下屋店長「おっとお客さんかい、失礼だった！是非何か見ていってくんなせえ！」よし、店に入ろう！',
                 },
                 feedbackIncorrect: {
-                    text: 'Shop owner: "I\'m in no mood to answer questions from folks who won\'t buy anything. Get out!"',
+                    text: '木下屋店長「モノも買わねえ奴には何も教えてやらん！」',
                 }
             };
 

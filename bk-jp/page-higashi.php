@@ -1,23 +1,23 @@
 <?php get_header();?>
 
 <body>
-    <div class="quiz-container -kyokai">
+    <div class="quiz-container">
         <!-- イントロセクション -->
         <div class="intro" id="quizIntro">
             <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hanzakai/yoshihara01.png" alt="イントロ画像" />
-            <p>Parent: "Oh dear...It seems my child got lost again...Excuse me! Have you seen a little girl? You have? What's her name?"</p>
+            <p>東さん「おいあんた・・うちの犬見なかったかい？え、見た？名前は！？」</p>
         </div>
 
         <!-- クイズセクション -->
         <div class="quiz-section" id="quiz">
-            <p class="question-text">I feel like I saw a little girl around the boundary marker stone...</p>
+            <!-- <p class="question-text">少女の名前を入力してください</p> -->
             <div class="quiz-input">
                 <input type="text" 
                        class="text-input" 
                        id="answerInput" 
-                       placeholder="Input Girl's Name"
+                       placeholder="犬の名前を入力してください"
                        autocomplete="off">
-                <button class="submit-button" id="submitQuiz" disabled>Answer</button>
+                <button class="submit-button" id="submitQuiz" disabled>解答する</button>
             </div>
             <div class="feedback hidden" id="quizFeedback"></div>
         </div>
@@ -29,25 +29,20 @@
             const quizConfig = {
                 // 正解の設定（複数の正解パターンに対応）
                 correctAnswers: [
-                    'GIN',
+                    'SOFIA',
                 ],
                 // 正解判定時の大文字小文字の区別
                 caseSensitive: false,
                 // 正解時のフィードバック
                 feedbackCorrect: {
-                    text: 'Parent: "Thank you so much for bringing her home! Ogin, I have told you many times NOT to go near the boundary marker stone! Do you want to be spirited away by the ghosts that haunt the roads?"',
-                    text01: 'Ogin: "Waaah!"(continues crying)',
-                    text02: 'Since ancient times, parents have warned their children about ghosts which haunt the roads and forests beyond the district as a way to keep them from wandering off.',
-                    text03: '"Kazukiyo-san wants my opinion on whether to mass produce his vinegar?...That makes sense. He is always thinking about his neighbors\' needs. He even goes out of his way every year to help clean the Hiyoshi Shrine. Of course, he\'d appreciate the opinions of the local people."',
-                    text04: '"I like the vinegar the way it is! I don\'t want it to change!"',
-                    text05: '"Haha! Kids are so honest, aren\'t they? But it would be sad if the vinegar used in the school lunches changed flavor. Mass produced products just aren\'t the same as locally made goods, you know?',
-                    file: '<?php echo get_template_directory_uri(); ?>/assets/images/recipe/gingerbloom.png'
-
+                    text: '東さん「おおお、ソフィア！！！」',
+                    text01: 'ソフィア「ワンワンワン」',
+                    text02: '東さん「あなた達、うちが明治時代に錨を作ってたなんてよく知ってたねえ」',
+                    text03: '東さん「高橋さんがねぇ・・ま、詳しいことは分からんが、俺はあの人がどんな選択をしてもついていくよ。なるべくならお酢の味は変えないで欲しいけどなあハハハ」',
                 },
                 // 不正解時のフィードバック
                 feedbackIncorrect: {
-                    text: 'Hmm... that\'s a different child. I just hope she hasn\'t wandered off toward the boundary marker stone and gotten lost.',
-                    text01: 'the boundary marker stone... maybe I should go check it out.',
+                    text: '残念！もう一度チャレンジする場合は、ページを再読み込みしてください。',
                 }
             };
 
@@ -80,23 +75,10 @@
                 if (feedback.text03 && feedback.text03.trim() !== '') {
                     feedbackContent += `<p class="feedback-text">${feedback.text03}</p>`;
                 }
-                // テキストが存在し、空でない場合のみ追加
-                if (feedback.text04 && feedback.text04.trim() !== '') {
-                    feedbackContent += `<p class="feedback-text">${feedback.text04}</p>`;
-                }
-                // テキストが存在し、空でない場合のみ追加
-                if (feedback.text05 && feedback.text05.trim() !== '') {
-                    feedbackContent += `<p class="feedback-text">${feedback.text05}</p>`;
-                }
                 
                 // 画像URLが存在し、空でない場合のみ追加
                 if (feedback.image && feedback.image.trim() !== '') {
                     feedbackContent += `<img class="feedback-image" src="${feedback.image}" alt="フィードバック画像">`;
-                }
-
-                // 画像URLが存在し、空でない場合のみ追加
-                if (feedback.file && feedback.file.trim() !== '') {
-                    feedbackContent += `<a href="${feedback.file}" download>You've obtained the vinegar juice recipe "Green Rush".</a>`;
                 }
                 
                 // フィードバック内容を設定

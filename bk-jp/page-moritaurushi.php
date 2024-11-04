@@ -1,28 +1,28 @@
 <?php get_header();?>
 
 <body>
-    <div class="quiz-container -urushi">
+    <div class="quiz-container">
         <!-- イントロセクション -->
         <div class="intro" id="quizIntro">
             <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hanzakai/monpe01.png" alt="イントロ画像" />
-            <p>Urushi shop owner: "Welcome! You must be new here. Our shop has been in business since 1828. Okawa is a furniture town, and our lacquer has been indispensable for things like Buddhist altars and dressers. We're very busy today and don't have time for browsers, so please leave!" </p>
+            <p>うるし屋店長「何の用だ！うちは創業1828年、家具の町大川では、仏壇、箪笥などの家具の塗料として漆は欠かせない存在だ、冷やかしなら出ていきな！」</p>
         </div>
 
         <!-- 選択式クイズセクション -->
         <div class="quiz-section" id="multipleChoiceQuiz">
             <!-- <p class="question-text">選択式の問題文をここに入力します。</p> -->
             <div class="quiz-options">
-                <button class="option-button" data-value="1">"This lacquer is very beautiful."</button>
-                <button class="option-button" data-value="2">"Wait! Please let us stay. We know a little about lacquer."</button>
+                <button class="option-button" data-value="1">1:　素敵な漆ですね</button>
+                <button class="option-button" data-value="2">2:　聞き込みさせてください</button>
             </div>
-            <button class="submit-button" id="submitMultipleChoice" disabled>Answer</button>
+            <button class="submit-button" id="submitMultipleChoice" disabled>解答する</button>
             <div class="feedback hidden" id="multipleChoiceFeedback"></div>
         </div>
 
         <!-- 入力式クイズセクション -->
         <div class="quiz-section hidden" id="textInputQuiz">
-            <input type="text" class="text-input" id="textAnswer" placeholder="Input Password">
-            <button class="submit-button" id="submitTextInput">Answer</button>
+            <input type="text" class="text-input" id="textAnswer" placeholder="うるし屋店長「ほう・・お前さん、漆が分かるってのかい？ならあんた、漆に混ぜ込むと強度があがる成分はなんだか言ってみな」">
+            <button class="submit-button" id="submitTextInput">解答する</button>
             <div class="feedback hidden" id="textInputFeedback"></div>
         </div>
     </div>
@@ -31,23 +31,23 @@
         document.addEventListener('DOMContentLoaded', function() {
             // 選択式クイズの設定
             const multipleChoiceQuiz = {
-                correctAnswer: '2',
+                correctAnswer: '1',
                 feedbackCorrect: {
-                    text: 'Urushi shop owner: "Hmph...you claim to understand lacquer, do you? Alright, tell me this: what is the component that, when mixed into lacquer, increases its strength?"',
+                    text: '',
                 },
                 feedbackIncorrect: {
-                    text: '"Obviously it beautiful! I don\'t have time for empty compliments. Get out!"',
+                    text: 'うるし屋店長「ふんっ・・！そんな見え透いたお世辞を言うやつは嫌いだね！」',
                 }
             };
 
             // 入力式クイズの設定
             const textInputQuiz = {
-                correctAnswer: 'protein',
+                correctAnswer: 'プロテイン',
                 feedbackCorrect: {
-                    text: 'Urushi shop owner: "Not bad...we use our lacquer to coat our woodwork. Without the wood to shine, our lacquer would be useless. You know Mr. Takahashi, right? His vinegar is like our lacquer, it can only exist in harmony with the surrounding industries. Take those away, and his vinegar would lose its flavor. He wishes to mass produce his vinegar?! He should know better than anyone what a terrible idea that would be!"',
+                    text: 'うるし屋のスタッフ「やるじゃねえか・・うるしってのは、建具や木工など、他の産業があって活きてくるもんだ。高橋さんちのお酢も一緒で、周囲の産業との調和があってはじめて成り立つもの、それをあそこの主人さんはよく知ってなさる。大量生産？そうしないほうがいいのは、彼が一番知ってるはずだぜ」',
                 },
                 feedbackIncorrect: {
-                    text: 'Urushi shop owner: "Ha ha ha! You don\'t know anything about lacquer, do you? Here\'s a hint before you leave: it\'s that stuff young people drink after going to the gym!"',
+                    text: 'うるし屋店長「違う違うっ！やっぱりあんたに漆は分からんめなぁ。ヒントはアレだよ、最近の若い子たちが、ジムに行ったあとに飲むあれだ・・」',
                 }
             };
 

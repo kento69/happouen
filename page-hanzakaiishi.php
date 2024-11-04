@@ -1,21 +1,21 @@
 <?php get_header();?>
 
 <body>
-    <div class="quiz-container">
+    <div class="quiz-container -ishi">
         <!-- イントロセクション -->
         <div class="intro" id="quizIntro">
-            <p>ここに藩境石・・江戸時代には久留米藩と柳河藩の境目として用いられていた。当時の藩境は、国境のようにぴり付いてた場所でもあった。だから、道をジグザグにして攻撃から身を隠せるような作りになっていた。</p>
+            <p>"Here is the boundary stone. During the Edo period, it was used as the border between the Kurume and Yanagawa Districts. At that time, crossing the district border was like crossing into another country. Very dangerous. That is why the roads were designed in a zigzag manner to hide from attacks."</p>
         </div>
         
         <!-- クイズセクション -->
         <div class="quiz-section" id="quiz">
-            <p class="question-text">おや、少女が泣いている。「えーんえーん」</p>
+            <p class="question-text">Oh no, a little girl is crying.<br>"Waah, waah."</p>
             <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hanzakai/girl03.png" alt="イントロ画像" />
             <div class="quiz-options">
-                <button class="option-button" data-value="1">1:声をかける</button>
-                <button class="option-button" data-value="2">2:忙しいので無視</button>
+                <button class="option-button" data-value="1">1 Approach her and ask what's wrong.</button>
+                <button class="option-button" data-value="2">2 Ignore her because you're busy.</button>
             </div>
-            <button class="submit-button" id="submitQuiz" disabled>解答する</button>
+            <button class="submit-button" id="submitQuiz" disabled>Answer</button>
             <div class="feedback hidden" id="quizFeedback"></div>
         </div>
     </div>
@@ -26,15 +26,15 @@
             const quizConfig = {
                 correctAnswer: '1',
                 feedbackCorrect: {
-                    text: '君、お名前は？',
-                    text01: '少女「アタイはお銀。おうちが分からなくなっちゃたの・・」',
-                    text02: 'まいったな・・何か目印みたいなものはないかな？',
-                    text03: '少女「ええっと・・お酢のお店と、和紙屋さんの間の古いおうちなんだけど・・」',
-                    image: '<?php echo get_template_directory_uri(); ?>/assets/images/hanzakai/girl01.png'
+                    text: 'You: "Hi there. What\'s wrong? What\'s your name?"',
+                    text01: 'Girl: "I\'m Ogin. I got lost and can\'t find my way home..."',
+                    text02: 'You: "You poor child! I\'ll help you find your home. Is there any kind of landmark you can tell me about?"',
+                    text03: 'Girl: "Umm...It\'s an old house between the vinegar shop and the washi paper store..."',
+                    image: '<?php echo get_template_directory_uri(); ?>/assets/images/hanzakai/girl01.png',
                 },
                 feedbackIncorrect: {
-                    text: '少女「えーんええーん」',
-                    image: '<?php echo get_template_directory_uri(); ?>/assets/images/hanzakai/girl03.png'
+                    text: 'Girl: "Waah, waah."',
+                    image: '<?php echo get_template_directory_uri(); ?>/assets/images/hanzakai/girl03.png',
                 }
             };
 
@@ -79,7 +79,6 @@
                 if (feedback.image && feedback.image.trim() !== '') {
                     feedbackContent += `<img class="feedback-image" src="${feedback.image}" alt="フィードバック画像">`;
                 }
-                
                 
                 // フィードバック内容を設定
                 feedbackDiv.innerHTML = feedbackContent;

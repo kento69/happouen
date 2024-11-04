@@ -1,19 +1,21 @@
 <?php get_header();?>
 
 <body>
-    <div class="quiz-container -kinoshita">
+    <div class="quiz-container">
         <!-- イントロセクション -->
         <div class="intro" id="quizIntro">
-            <p>Kinoshita family Shop owner: "Welcome! I see you're admiring my pottery. In case you weren't aware, my pottery shop has been established in this town since the Edo period. I am very busy today and have no time for browsers, so if you're not interested in buying, please leave!"</p>
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hanzakai/yoshihara01.png" alt="イントロ画像" />
+            <p>ここは柳川藩小保町の別当職を代々務め、のちに蒲池組の大庄屋となった吉原家の住宅。住人は留守のようだ。土間から良い匂いがするぞ・・行ってみよう！</p>
         </div>
-        
+
         <!-- クイズセクション -->
         <div class="quiz-section" id="quiz">
+            <p class="question-text">住人「お、お前さんたち、何者だい！？」</p>
             <div class="quiz-options">
-                <button class="option-button" data-value="1">1. "I'm here to shop.:</button>
-                <button class="option-button" data-value="2">2. "I'd like to ask some questions first."</button>
+                <button class="option-button" data-value="1">1:　怪しい者ではありません</button>
+                <button class="option-button" data-value="2">2:　高橋さんの友人です</button>
             </div>
-            <button class="submit-button" id="submitQuiz" disabled>Answer</button>
+            <button class="submit-button" id="submitQuiz" disabled>解答する</button>
             <div class="feedback hidden" id="quizFeedback"></div>
         </div>
     </div>
@@ -22,12 +24,16 @@
         document.addEventListener('DOMContentLoaded', function() {
             // クイズの設定
             const quizConfig = {
-                correctAnswer: '1',
+                correctAnswer: '2',
                 feedbackCorrect: {
-                    text: 'Shop owner: "Oh, a customer! My apologies! Please, take your time and look around." Alright, let\'s go into the shop!',
+                    text01: '住人「なあんだ、高橋さんの友人かい！ちょうど今、高橋さんに教えてもらったお酢ジュースを土間で作ってるところだ、お前らにもレシピをくれてやる」',
+                    text02: '住人「高橋さんに伝えておいてくれ、俺らはあんたのお酢が大好きだって！小さいころから変わらない味だ、ずっとこのままで頼むよ！」',
+                    image: '<?php echo get_template_directory_uri(); ?>/assets/images/hanzakai/yoshihara02.png',
+                    file: '<?php echo get_template_directory_uri(); ?>/assets/document/cocktail.pdf'
                 },
                 feedbackIncorrect: {
-                    text: 'Shop owner: "I\'m in no mood to answer questions from folks who won\'t buy anything. Get out!"',
+                    text: '住人「怪しい！勝手に家に入り込みやがって！けえれけえれ！」',
+                    image: '<?php echo get_template_directory_uri(); ?>/assets/images/hanzakai/yoshihara02.png'
                 }
             };
 
@@ -55,24 +61,25 @@
                 if (feedback.text && feedback.text.trim() !== '') {
                     feedbackContent += `<p class="feedback-text">${feedback.text}</p>`;
                 }
-                // テキストが存在し、空でない場合のみ追加
+                
                 if (feedback.text01 && feedback.text01.trim() !== '') {
                     feedbackContent += `<p class="feedback-text">${feedback.text01}</p>`;
-                }
-                // テキストが存在し、空でない場合のみ追加
-                if (feedback.text02 && feedback.text02.trim() !== '') {
-                    feedbackContent += `<p class="feedback-text">${feedback.text02}</p>`;
-                }
-                // テキストが存在し、空でない場合のみ追加
-                if (feedback.text03 && feedback.text03.trim() !== '') {
-                    feedbackContent += `<p class="feedback-text">${feedback.text03}</p>`;
                 }
 
                 // 画像URLが存在し、空でない場合のみ追加
                 if (feedback.image && feedback.image.trim() !== '') {
                     feedbackContent += `<img class="feedback-image" src="${feedback.image}" alt="フィードバック画像">`;
                 }
+
+                // 画像URLが存在し、空でない場合のみ追加
+                if (feedback.file && feedback.file.trim() !== '') {
+                    feedbackContent += `<a href="${feedback.file}" download>お酢ジュースのレシピを手に入れる</a>`;
+                }
                 
+                // テキストが存在し、空でない場合のみ追加
+                if (feedback.text02 && feedback.text02.trim() !== '') {
+                    feedbackContent += `<p class="feedback-text">${feedback.text02}</p>`;
+                }
                 
                 // フィードバック内容を設定
                 feedbackDiv.innerHTML = feedbackContent;
